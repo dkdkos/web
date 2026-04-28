@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>國堡門 Guobao Door | 頂級古典客製大門</title>
+    <style>
+        /* 引入古典明體(Noto Serif TC)與無襯線體(Noto Sans TC)搭配使用 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+        /* --- 全域設定：加入平滑滾動 --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f9f8f4; 
+            color: #3e332a;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* --- 標題全面改用古典明體 --- */
+        h1, h2, h3, h4, .logo, .nav a, .section-tag {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* --- 頂部導覽列 (莊重的純色與雙金線) --- */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fdfcf9; 
+            padding: 15px 5%;
+            border-bottom: 4px double #d4c3a3;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c1e16;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+        .nav {
+            list-style-type: none;
+            display: flex;
+            align-items: center; 
+            gap: 20px; 
+        }
+
+        .nav > li > a {
+            text-decoration: none;
+            color: #4a3b32;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 1px;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav > li > a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 2px;
+            left: 50%;
+            background-color: #a8874a; 
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav > li > a:hover { color: #a8874a; }
+        .nav > li > a:hover::after { width: 100%; }
+
+        /* --- 下拉選單 --- */
+        .dropdown { position: relative; }
+
+        .dropdown-content {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute; 
+            background-color: #fdfcf9;
+            min-width: 130px; 
+            box-shadow: 0px 10px 25px rgba(44, 30, 22, 0.15); 
+            padding: 10px; 
+            list-style-type: none;
+            top: calc(100% + 15px); 
+            border: 1px solid #d4c3a3;
+            transition: all 0.4s ease;
+            z-index: 1001; 
+            left: 50%; 
+            transform: translate(-50%, 15px);
+        }
+
+        .dropdown-content.mega-menu {
+            width: 380px; 
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 4px 10px; 
+        }
+
+        .dropdown:hover .dropdown-content {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(-50%, 0); 
+        }
+
+        .dropdown-content a {
+            padding: 8px 12px; font-size: 14px; color: #5a4a3f;
+            text-decoration: none; display: block;
+            transition: all 0.2s ease;
+            text-align: center; 
+            font-family: 'Noto Sans TC', sans-serif;
+            border-bottom: 1px dashed #ede5d8;
+        }
+
+        .dropdown-content.mega-menu a { text-align: left; }
+        .dropdown-content a:hover { background-color: #f5f0e6; color: #a8874a; padding-left: 18px; }
+
+        .btn-book {
+            background-color: #2c1e16;
+            color: #f9f8f4 !important;
+            padding: 10px 24px !important;
+            border: 1px solid #2c1e16;
+            border-radius: 2px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            transition: all 0.4s ease; 
+            margin-left: 10px; 
+        }
+
+        .btn-book:hover { 
+            background-color: #fdfcf9; 
+            color: #2c1e16 !important; 
+            border: 1px solid #a8874a;
+        }
+
+        /* --- Hero 區塊 --- */
+        .hero {
+            background: linear-gradient(rgba(20, 15, 10, 0.7), rgba(20, 15, 10, 0.5)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #f9f8f4; text-align: center; padding: 0 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20px; left: 20px; right: 20px; bottom: 20px;
+            border: 1px solid rgba(212, 195, 163, 0.5);
+            pointer-events: none;
+        }
+
+        .hero-subtitle {
+            color: #d4c3a3; font-size: 14px; letter-spacing: 6px;
+            margin-bottom: 15px; text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 58px; margin-bottom: 25px;
+            letter-spacing: 6px; font-weight: 600;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .hero p {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 20px; color: #ede5d8;
+            letter-spacing: 3px; font-weight: 300; max-width: 650px;
+        }
+
+        /* --- 國堡文化 --- */
+        .culture-section {
+            display: flex;
+            align-items: center;
+            padding: 100px 8%;
+            gap: 60px;
+            background-color: #f9f8f4;
+            border-top: 1px solid #e6decb;
+            border-bottom: 1px solid #e6decb;
+        }
+
+        .culture-img {
+            flex: 1; padding: 10px; background-color: #fff;
+            border: 1px solid #d4c3a3;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* .culture-img img { width: 100%; height: auto; display: block; } */
+
+
+        /* --- 鎖定文化區塊圖片的比例 (目標：變成客製化客廳圖片的大小比例) --- */
+        .culture-img img { 
+            width: 100%; 
+            display: block; 
+            
+            /* 將比例從之前的 3:4 寬長方形修改為更接近客廳圖片的 4:3 優雅長方形 */
+            aspect-ratio: 4 / 3; 
+            
+            /* 讓圖片智慧裁切填滿，多餘的地方(左右)會自動裁切，保持大門等比例不變形 */
+            object-fit: cover; 
+        }
+
+
+
+        .culture-content { flex: 1; }
+
+        .section-tag {
+            color: #a8874a; font-weight: 600; letter-spacing: 4px;
+            font-size: 14px; text-transform: uppercase; margin-bottom: 15px; display: block;
+            font-style: italic;
+        }
+
+        .culture-content h2 {
+            font-size: 42px; color: #2c1e16; font-weight: 700;
+            margin-bottom: 25px; line-height: 1.3;
+        }
+
+        .culture-desc {
+            color: #5a4a3f; font-size: 16px; font-weight: 400;
+            margin-bottom: 40px; line-height: 2;
+            border-left: 4px double #d4c3a3; padding-left: 20px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px 30px;
+        }
+
+        .value-item {
+            position: relative; 
+            background-color: #fff;
+            padding: 30px;
+            border: 1px solid #e6decb;
+            overflow: hidden; 
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+
+        .value-item:hover {
+            border-color: #a8874a;
+            box-shadow: 0 10px 25px rgba(44, 30, 22, 0.08);
+            transform: translateY(-5px); 
+        }
+
+        .value-item h4 {
+            font-size: 20px; color: #2c1e16; font-weight: 600;
+            margin-bottom: 10px; position: relative; z-index: 2;
+        }
+        
+        .value-item h4 span {
+            position: absolute;
+            bottom: -20px;
+            right: -10px;
+            font-size: 100px;
+            color: rgba(212, 195, 163, 0.15); 
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            line-height: 1;
+            z-index: -1;
+            transition: all 0.5s ease;
+        }
+
+        .value-item:hover h4 span {
+            color: rgba(168, 135, 74, 0.25);
+            transform: scale(1.1) translateX(-5px);
+        }
+
+        .gold-line {
+            width: 30px;
+            height: 2px;
+            background-color: #a8874a;
+            margin-bottom: 15px;
+            transition: width 0.4s ease;
+        }
+
+        .value-item:hover .gold-line {
+            width: 50px; 
+        }
+
+        .value-item p { font-size: 14px; color: #6e5c4f; font-weight: 300; margin-top: 10px; position: relative; z-index: 2;}
+
+        /* --- 產品展示 --- */
+        .products-section {
+            padding: 100px 8%;
+            background-color: #fdfcf9; 
+            background-image: radial-gradient(#e6decb 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .products-header { text-align: center; margin-bottom: 70px; }
+        .products-header h2 { font-size: 40px; color: #2c1e16; margin-top: 10px; letter-spacing: 2px;}
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            background: #fff; border: 1px solid #e6decb;
+            padding: 15px; transition: all 0.4s ease; cursor: pointer;
+        }
+
+        .product-card:hover {
+            border-color: #a8874a;
+            box-shadow: 0 15px 30px rgba(44, 30, 22, 0.1);
+        }
+
+        .product-img {
+            height: 350px; background-size: cover; background-position: center;
+            border: 1px solid #f0f0f0; 
+        }
+
+        .p1 { background-image: url('images/雙玄關門.jpg'); }
+        .p2 { background-image: url('images/天然實木.jpg'); }
+        .p3 { background-image: url('images/門中門.jpg'); }
+
+        .product-info { padding: 25px 10px 10px; text-align: center; }
+        .product-info h3 { font-size: 22px; color: #2c1e16; margin-bottom: 15px; letter-spacing: 1px; }
+        .product-info p { font-size: 14px; color: #6e5c4f; line-height: 1.8; }
+
+
+
+
+        /* --- 門樘養護 (深色精品卡片風) --- */
+        .maintenance-section {
+            padding: 100px 8%;
+            background-color: #2c1e16; /* 深胡桃木底色，營造高級說明書質感 */
+            color: #f9f8f4;
+            position: relative;
+        }
+
+        /* 讓深色區塊也有古典邊框的感覺 */
+        .maintenance-section::after {
+            content: '';
+            position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 1px solid rgba(212, 195, 163, 0.2);
+            pointer-events: none;
+        }
+
+        .maintenance-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .maintenance-header .section-tag {
+            color: #d4c3a3; /* 亮金色 */
+        }
+
+        .maintenance-header h2 {
+            font-size: 40px; color: #fdfcf9; margin-top: 10px; letter-spacing: 2px;
+        }
+
+        .maintenance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .m-card {
+            background-color: #36261d; /* 比背景稍微亮一點的深咖啡色 */
+            border: 1px solid #4a3b32;
+            padding: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .m-card:hover {
+            border-color: #a8874a;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
+        }
+
+        .m-card h3 {
+            font-size: 24px; color: #d4c3a3; margin-bottom: 15px;
+            letter-spacing: 2px; border-bottom: 1px dashed #4a3b32;
+            padding-bottom: 15px; display: inline-block; width: 100%;
+        }
+
+        .m-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .m-list li {
+            font-size: 15px; color: #ede5d8; margin-bottom: 20px;
+            line-height: 1.8; position: relative;
+            padding-left: 25px; font-weight: 300;
+        }
+
+        /* 古典菱形金屬列表符號 */
+        .m-list li::before {
+            content: '◆';
+            position: absolute;
+            left: 0; top: 0;
+            color: #a8874a;
+            font-size: 12px;
+        }
+
+        /* 強調文字的樣式 */
+        .m-highlight {
+            color: #fff;
+            font-weight: 600;
+            border-bottom: 1px solid #a8874a;
+        }
+
+        /* 響應式：平板與手機變單排 */
+        @media (max-width: 900px) {
+            .maintenance-grid { grid-template-columns: 1fr; }
+        }
+        /* --- 門市資訊 (新增區塊) --- */
+        .stores-section {
+            padding: 100px 8%;
+            background-color: #f9f8f4; /* 象牙白底色，與前一區塊稍作區隔 */
+            border-top: 1px solid #e6decb;
+        }
+
+        .stores-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .stores-header h2 {
+            font-size: 40px; color: #2c1e16; margin-top: 10px; letter-spacing: 2px;
+        }
+
+        .stores-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .store-card {
+            background-color: #fff;
+            padding: 35px 25px;
+            border: 1px solid #e6decb;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .store-card:hover {
+            border-color: #a8874a;
+            box-shadow: 0 10px 25px rgba(44, 30, 22, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .store-card h4 {
+            font-size: 24px; color: #2c1e16; margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        /* 門市卡片專用的置中短金線 */
+        .gold-line-center {
+            width: 40px;
+            height: 2px;
+            background-color: #a8874a;
+            margin: 0 auto 20px auto;
+            transition: width 0.4s ease;
+        }
+
+        .store-card:hover .gold-line-center {
+            width: 60px; /* 懸停時金線伸長 */
+        }
+
+        .store-card p {
+            font-size: 15px; color: #5a4a3f; margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+
+
+
+        /* --- 門市照片專屬設定 --- */
+        .store-img-wrapper {
+            /* 這裡的負 margin 是為了抵銷卡片原本的 padding，讓圖片可以完美貼齊卡片的上、左、右邊緣 */
+            margin: -35px -25px 25px -25px; 
+            height: 250px; /* 控制門市照片的高度，你可以依喜好微調 */
+            overflow: hidden; /* 把超出範圍的圖片藏起來 */
+            border-bottom: 1px solid #e6decb; /* 圖片下方加一條細線分隔文字 */
+        }
+
+        .store-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 智慧裁切，保證照片不會被拉長或壓扁 */
+            transition: transform 0.6s ease;
+        }
+
+        /* 當滑鼠移到卡片上時，照片會微微放大，增加精品互動感 */
+        .store-card:hover .store-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* --- 回到頂部按鈕 --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 45px;
+            height: 45px;
+            background-color: #2c1e16; 
+            color: #d4c3a3; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 1px solid #a8874a;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #fdfcf9;
+            color: #2c1e16;
+            border-color: #2c1e16;
+        }
+
+        /* --- 響應式設計 --- */
+        @media (max-width: 1024px) {
+            .culture-section { flex-direction: column; }
+            .product-grid { grid-template-columns: 1fr 1fr; }
+            .stores-grid { grid-template-columns: repeat(2, 1fr); } /* 平板變2排 */
+        }
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 15px; }
+            .nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .product-grid { grid-template-columns: 1fr; }
+            .stores-grid { grid-template-columns: 1fr; } /* 手機變1排 */
+            .hero h1 { font-size: 40px; }
+            .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+        }
+        /* 讓下拉清單的項目可以作為定位基準 */
+        .dropdown-content li {
+            position: relative;
+        }
+
+        /* 預設隱藏二級選單 (一般門花的子項目) */
+        .second-level-content {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: -1px;       /* 與父層邊框對齊 */
+            right: 100%;      /* 關鍵：向右側彈出 */
+            background-color: #fdfcf9; /* 沿用朋友的米色調 */
+            min-width: 150px;
+            box-shadow: 10px 10px 25px rgba(44, 30, 22, 0.1);
+            list-style-type: none;
+            padding: 10px;
+            border: 1px solid #d4c3a3;
+            transition: all 0.3s ease;
+            transform: translateX(10px);
+            z-index: 1002;
+        }
+
+        /* 滑鼠移入「一般門花」時，顯示二級選單 */
+        .side-dropdown:hover .second-level-content {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 修正文字對齊 */
+        .second-level-content a {
+            text-align: left !important;
+            white-space: nowrap;
+            border-bottom: 1px dashed #ede5d8;
+        }
+        /* 門花預覽總容器 */
+        .door-flower-box {
+            display: flex;
+            flex-direction: row-reverse; /* 將右邊的文字與左邊的圖片對調位置 */
+            width: 650px;               /* 寬度設大，方便看清楚門花細節 */
+            height: 400px;
+            background-color: #fdfcf9;
+            padding: 0 !important;
+            border: 1px solid #d4c3a3;
+        }
+
+        /* 左側門花照片顯示區 */
+        .flower-preview-area {
+            flex: 2;                   /* 照片佔比較大 */
+            position: relative;
+            background-color: #fff;    /* 白色背景能看清楚門花線條 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #ede5d8;
+        }
+
+        .hint-text {
+            color: #a8874a;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* 門花照片設定 */
+        .flower-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;      /* 確保整張門花預覽圖都能完整看見，不被切到 */
+            padding: 15px;
+            opacity: 0;               /* 預設隱藏 */
+            transition: opacity 0.3s ease;
+        }
+
+        /* 右側系列名稱清單 */
+        .flower-nav-list {
+            flex: 1;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .flower-nav-list li a {
+            text-align: left !important;
+            padding: 18px 25px !important;
+            font-size: 16px;
+            color: #2c1e16;
+            border-bottom: 1px dashed #ede5d8;
+        }
+
+        .flower-nav-list li a:hover {
+            background-color: #f9f8f4;
+            color: #a8874a;
+        }
+
+        /* --- 純 CSS 觸發門花圖片更換 --- */
+
+        /* 指向 D系列時，顯示 D系列門花大圖 */
+        .item-d:hover ~ .flower-preview-area .img-d {
+            opacity: 1;
+        }
+
+        /* 指向 F系列時，顯示 F系列門花大圖 */
+        .item-f:hover ~ .flower-preview-area .img-f {
+            opacity: 1;
+        }
+
+        /* 指向 S系列時，顯示 S系列門花大圖 */
+        .item-s:hover ~ .flower-preview-area .img-s {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">GUOBAO 國堡門</div>
+        <ul class="nav">
+            <li class="dropdown">
+                <a href="#">關於國堡 ▼</a>
+                <ul class="dropdown-content">
+                    <!-- <li><a href="#about">品牌介紹</a></li> -->
+                    <li><a href="#culture">國堡文化</a></li>
+                    <li><a href="#stores">門市資訊</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#products">玄關門系列 ▼</a>
+                <ul class="dropdown-content mega-menu">
+                    <!-- <li><a href="#">雙玄關門系列A系列</a></li> -->
+                    <li><a href="#">雙玄關門系列D系列</a></li>
+                    <li><a href="#">雙玄關門系列</a></li>
+                    <!-- <li><a href="#">雙玄關雙視窗系列</a></li> -->
+                    <!-- <li><a href="#">防水防污門系列</a></li> -->
+                    <!-- <li><a href="#">鋼製壓板門系列</a></li> -->
+                    <!-- <li><a href="#">百頁通風門系列</a></li> -->
+                    <li><a href="#">日式玄關門系列</a></li>
+                    <li><a href="#">石材玄關門系列</a></li>
+                    <!-- <li><a href="#">烤漆精雕門系列</a></li> -->
+                    <!-- <li><a href="#">羅浮宮浮雕門系列</a></li> -->
+                    <li><a href="#">門中門系列</a></li>
+                    <!-- <li><a href="#">科技實木門系列</a></li> -->
+                    <li><a href="#">天然實木門系列</a></li>
+                    <!-- <li><a href="#">碳纖防爆門系列</a></li> -->
+                    <!-- <li><a href="#">雙茂門</a></li> -->
+                </ul>
+            </li>
+            
+           <li class="dropdown">
+                <a href="#flowers">門花系列 ▼</a>
+                <ul class="dropdown-content">
+                    <li class="side-dropdown">
+                        <a href="#">一般門花 ▸</a>
+                        
+                        <div class="second-level-content door-flower-box">
+                            
+                            <ul class="flower-nav-list">
+                                <li class="item-d"><a href="#">D系列門花 (經典)</a></li>
+                                <li class="item-f"><a href="#">F系列門花 (現代)</a></li>
+                                <li class="item-s"><a href="#">S系列門花 (藝術)</a></li>
+                                <li><a href="#">查看更多款式</a></li>
+                            </ul>
+
+                            <div class="flower-preview-area">
+                                <div class="hint-text">請選擇系列預覽</div>
+                                <img src="images/d-series-all.jpg" class="flower-img img-d" alt="D系列門花全集">
+                                <img src="images/f-series-all.jpg" class="flower-img img-f" alt="F系列門花全集">
+                                <img src="images/s-series-all.jpg" class="flower-img img-s" alt="S系列門花全集">
+                            </div>
+
+                        </div>
+                    </li>
+        <li><a href="#">小視窗門花</a></li>
+        <li><a href="#">開天門花</a></li>
+    </ul>
+</li>
+            </li>
+            <li><a href="#locks">門鎖系列</a></li>
+            <li><a href="maintenance.html">門樘養護</a></li>
+            <li><a href="#colors">門色總覽</a></li>
+            <li><a href="gallery-sale.html">實例欣賞</a></li>
+            <li><a href="qa.html">常見問題</a></li>
+            <li><a href="booking.html" class="btn-book">預約丈量</a></li>
+        </ul>
+    </header>
+
+    <section class="hero">
+        <span class="hero-subtitle">Classic Art & Craftsmanship</span>
+        <h1>首富尺度，大堂之美</h1>
+        <p>以雋永的質感，創造平實的價格。<br>打造完美的時間質量，讓每一件作品都是傳世不朽的保證。</p>
+    </section>
+
+    <section class="culture-section" id="culture">
+        <div class="culture-img">
+            <img src="images/product.jpg" alt="國堡門文化">
+        </div>
+        <div class="culture-content">
+            <span class="section-tag">About GB Guobao</span>
+            <h2>融合藝術於生活之中</h2>
+            <p class="culture-desc">
+                國堡門不只是一個品牌，更是一個重視道德及對消費者負責的承諾。我們追求生活品味的設計，打造精雕細琢的品質，每一道門都擁有防偽造標章，經得起時間與空間的考驗。
+            </p>
+            
+            <div class="values-grid">
+                <div class="value-item">
+                    <h4><span>I</span> Design 設計</h4>
+                    <div class="gold-line"></div>
+                    <p>發揮淋漓盡致的創新，搭配室內設計，使您的家門成為城市的新一道風景線。</p>
+                </div>
+                <div class="value-item">
+                    <h4><span>II</span> Quality 品質</h4>
+                    <div class="gold-line"></div>
+                    <p>國家級品質認證保護，秉持安全、防爆、耐震的嚴格要求，堅持為您做到每一細節。</p>
+                </div>
+                <div class="value-item">
+                    <h4><span>III</span> Safety 安全</h4>
+                    <div class="gold-line"></div>
+                    <p>兼顧環保概念與堅固結構，創造客戶居家使用的身心靈安全。</p>
+                </div>
+                <div class="value-item">
+                    <h4><span>IV</span> Guarantee 保障</h4>
+                    <div class="gold-line"></div>
+                    <p>傳世不朽的品質保證，從前端設計到後端售後服務，皆力求完美。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section" id="products">
+        <div class="products-header">
+            <span class="section-tag">Masterpiece Collection</span>
+            <h2>精選玄關門系列</h2>
+        </div>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img p1"></div>
+                <div class="product-info">
+                    <h3>雙玄關門</h3>
+                    <p>路過、走過，就讓他錯過吧，寧靜的夜，就適合 double 的隔絕，塵囂、紛擾、晚安。</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img p2"></div>
+                <div class="product-info">
+                    <h3>天然實木門</h3>
+                    <p>保留天然木質的溫暖，結合高科技結構，呈現極致工藝與居家品味。</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img p3"></div>
+                <div class="product-info">
+                    <h3>門中門</h3>
+                    <p>小門多一片，安全看的見。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stores-section" id="stores">
+        <div class="stores-header">
+            <span class="section-tag">Store Locations</span>
+            <h2>全台門市據點</h2>
+        </div>
+        
+        <div class="stores-grid">
+            <div class="store-card">
+                <div class="store-img-wrapper">
+                <img src="images/永和.jpg" alt="永和門市實景">
+                </div>
+                <h4>永和門市</h4>
+                <div class="gold-line-center"></div>
+                <p>新北市永和區仁愛路166號1樓</p>
+                <p>TEL: 02-8923-0772</p>
+                <p>FAX: 02-2927-4287</p>
+            </div>
+            
+            <div class="store-card">
+                <div class="store-img-wrapper">
+                <img src="images/蘆洲.jpg" alt="蘆洲門市實景">
+                </div>
+                <h4>蘆洲門市</h4>
+                <div class="gold-line-center"></div>
+                <p>新北市蘆洲區中山一路80號1樓</p>
+                <p>TEL: 02-2848-7783</p>
+                <p>FAX: 02-2848-7706</p>
+            </div>
+
+            <div class="store-card">
+                <div class="store-img-wrapper">
+                <img src="images/信義.jpg" alt="信義門市實景">
+                </div>
+                <h4>信義門市</h4>
+                <div class="gold-line-center"></div>
+                <p>臺北市基隆路二段215號1樓</p>
+                <p>TEL: 02-8732-8128</p>
+                <p>FAX: 02-8732-8157</p>
+            </div>
+
+            <div class="store-card">
+                <div class="store-img-wrapper">
+                <img src="images/建國.jpg" alt="建國門市實景">
+                </div>
+                <h4>建國門市</h4>
+                <div class="gold-line-center"></div>
+                <p>臺北市建國北路三段169號1樓</p>
+                <p>TEL: 02-2501-6706</p>
+                <p>FAX: 02-2501-6703</p>
+            </div>
+
+            <div class="store-card">
+                <div class="store-img-wrapper">
+                <img src="images/桃園.jpg" alt="桃園門市實景">
+                </div>
+                <h4>桃園門市</h4>
+                <div class="gold-line-center"></div>
+                <p>桃園市桃園區經國路695號1樓</p>
+                <p>TEL: 03-325-9837</p>
+                <p>FAX: 03-325-6176</p>
+            </div>
+
+            <div class="store-card">
+                <div class="store-img-wrapper">
+                <img src="images/宜蘭.jpg" alt="宜蘭門市實景">
+                </div>
+                <h4>宜蘭門市</h4>
+                <div class="gold-line-center"></div>
+                <p>宜蘭縣美功路一段41巷22號1樓</p>
+                <p>TEL: 03-9301487</p>
+                <p>FAX: 03-9309470</p>
+            </div>
+        </div>
+    </section>
+
+    <a href="#" id="backToTop" class="back-to-top" title="回到頂部">TOP</a>
+
+    <script>
+        const backToTopBtn = document.getElementById("backToTop");
+
+        // 監聽捲動事件
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+
+        // 點擊平滑回到頂部
+        backToTopBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>預約丈量 | 國堡門 Guobao Door</title>
+    <style>
+        /* 引入古典字體 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;600&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f9f8f4; /* 象牙白底色 */
+            color: #3e332a;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .logo, .nav a, .section-tag {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* --- 頂部導覽列 --- */
+        .header {
+            position: sticky; top: 0; z-index: 1000; 
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: #fdfcf9; padding: 15px 5%;
+            border-bottom: 4px double #d4c3a3;
+        }
+        .logo { font-size: 28px; font-weight: 700; color: #2c1e16; letter-spacing: 2px; text-decoration: none;}
+        .nav { list-style-type: none; display: flex; align-items: center; gap: 20px; }
+        .nav > li > a { text-decoration: none; color: #4a3b32; font-weight: 600; font-size: 16px; letter-spacing: 1px; padding: 10px 0; position: relative; transition: color 0.3s ease; }
+        .nav > li > a::after { content: ''; position: absolute; width: 0; height: 1px; bottom: 2px; left: 50%; background-color: #a8874a; transition: all 0.4s ease; transform: translateX(-50%); }
+        .nav > li > a:hover { color: #a8874a; }
+        .nav > li > a:hover::after { width: 100%; }
+
+
+        /* 導覽列的預約按鈕 (當前頁面高亮) */
+        .btn-book {
+            background-color: #fdfcf9;
+            color: #2c1e16 !important;
+            padding: 10px 24px !important;
+            border: 1px solid #a8874a;
+            border-radius: 2px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-left: 10px; 
+        }
+        .btn-book::after { display: none !important; }
+
+        /* --- 頁面橫幅 --- */
+        .page-banner {
+            background-color: #2c1e16; 
+            padding: 80px 20px 40px 20px; text-align: center; color: #fdfcf9;
+        }
+        .page-banner h1 { font-size: 42px; letter-spacing: 4px; margin-bottom: 10px; }
+        .page-banner p { color: #d4c3a3; font-size: 16px; letter-spacing: 2px; font-style: italic; font-family: 'Playfair Display', serif; }
+
+        /* --- 獨立的預約表單區塊 --- */
+        .booking-page-section {
+            background-color: #2c1e16; /* 延續橫幅的深色背景 */
+            padding: 40px 20px 100px 20px;
+            position: relative;
+            border-bottom: 1px solid #a8874a;
+        }
+
+        .booking-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #36261d;
+            padding: 60px 50px;
+            border: 1px solid #4a3b32;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        /* 內縮金屬裝飾框 */
+        .booking-container::before {
+            content: ''; position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 1px solid rgba(212, 195, 163, 0.15);
+            pointer-events: none;
+        }
+
+        .booking-header { text-align: center; margin-bottom: 40px; position: relative; z-index: 2; }
+        .booking-header h2 { font-size: 32px; color: #d4c3a3; margin-bottom: 15px; letter-spacing: 2px; }
+        .booking-header p { color: #ede5d8; font-size: 15px; font-weight: 300; letter-spacing: 1px; }
+
+        /* 表單網格排版 (雙欄設計) */
+        .booking-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .full-width { grid-column: 1 / -1; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 14px; color: #d4c3a3; margin-bottom: 8px; letter-spacing: 1px; }
+
+        /* 輸入框設計 */
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 14px 15px;
+            background-color: #fdfcf9;
+            border: 1px solid #e6decb;
+            color: #2c1e16;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #a8874a;
+            box-shadow: 0 0 8px rgba(168, 135, 74, 0.3);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+        /* 預約送出按鈕 */
+        .btn-submit {
+            grid-column: 1 / -1; background-color: #a8874a; color: #fff;
+            border: none; padding: 16px 0; font-size: 16px; font-weight: 600;
+            letter-spacing: 4px; cursor: pointer; transition: all 0.3s ease;
+            font-family: 'Noto Serif TC', serif; margin-top: 15px;
+        }
+
+        .btn-submit:hover { background-color: #c5a880; box-shadow: 0 5px 15px rgba(168, 135, 74, 0.4); }
+
+        /* 回到首頁按鈕 */
+        .btn-back-wrapper { text-align: center; margin: 60px 0; }
+        .btn-back {
+            display: inline-block; width: 200px; background-color: transparent; color: #2c1e16;
+            padding: 12px 0; text-decoration: none; border: 1px solid #2c1e16;
+            font-family: 'Noto Serif TC', serif; letter-spacing: 2px; transition: all 0.4s ease;
+        }
+        .btn-back:hover { background-color: #2c1e16; color: #fdfcf9; }
+
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 15px; }
+            .nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .booking-container { padding: 40px 25px; }
+            .booking-form { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">GUOBAO 國堡門</a>
+
+        <ul class="nav">
+            <li><a href="index.html#about">關於國堡</a></li>
+            <li><a href="index.html#products">玄關門系列</a></li>
+            <li><a href="maintenance.html">門樘養護</a></li>
+            <li><a href="gallery-sale.html">實例欣賞與展品</a></li>
+            <li><a href="qa.html">常見問題</a></li>
+            <li><a href="#" class="btn-book">預約丈量</a></li>
+        </ul>
+    </header>
+
+    <section class="page-banner">
+        <h1>專屬預約</h1>
+        <p>Exclusive Booking Service</p>
+    </section>
+
+    <main class="booking-page-section">
+        <div class="booking-container">
+            <div class="booking-header">
+                <h2>VIP 尊榮預約丈量</h2>
+                <p>留下您的資訊，國堡門專員將於 24 小時內與您聯繫，安排專業丈量與客製化諮詢服務。</p>
+            </div>
+            
+            <form action="#" method="POST" class="booking-form">
+                
+                <div class="form-group">
+                    <label for="name">聯絡人姓名 *</label>
+                    <input type="text" id="name" name="name" placeholder="請輸入您的姓名" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">聯絡電話 *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="09XX-XXX-XXX" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="address">預定安裝地址 *</label>
+                    <input type="text" id="address" name="address" placeholder="請輸入需丈量的詳細地址" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="door-type">感興趣的門款系列</label>
+                    <select id="door-type" name="door-type">
+                        <option value="" disabled selected>請選擇門款類型 (非必填)</option>
+                        <option value="天然實木門">天然實木門</option>
+                        <option value="門中門">門中門</option>
+                        <option value="雙玄關">雙玄關門系列</option>
+                        <option value="其他">其他訂製需求</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">期望丈量日期</label>
+                    <input type="date" id="date" name="date">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="message">特殊需求與備註</label>
+                    <textarea id="message" name="message" placeholder="例如：需協助拆除舊門、有無電梯、指定聯絡時段等..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">確認送出預約</button>
+            </form>
+        </div>
+    </main>
+
+    <div class="btn-back-wrapper">
+        <a href="index.html" class="btn-back">返回首頁</a>
+    </div>
+
+</body>
+</html>

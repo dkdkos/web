@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>門樘養護 | 國堡門 Guobao Door</title>
+    <style>
+        /* 引入古典明體與無襯線體 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;600&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f9f8f4; /* 統一的象牙白底色 */
+            color: #3e332a;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .logo, .nav a, .section-tag {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* --- 頂部導覽列 (與首頁完全一致) --- */
+        .header {
+            position: sticky; top: 0; z-index: 1000; 
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: #fdfcf9; padding: 15px 5%;
+            border-bottom: 4px double #d4c3a3;
+        }
+        .logo { font-size: 28px; font-weight: 700; color: #2c1e16; letter-spacing: 2px; text-decoration: none;}
+        .nav { list-style-type: none; display: flex; align-items: center; gap: 20px; }
+        .nav > li > a { text-decoration: none; color: #4a3b32; font-weight: 600; font-size: 16px; letter-spacing: 1px; padding: 10px 0; position: relative; transition: color 0.3s ease; }
+        .nav > li > a::after { content: ''; position: absolute; width: 0; height: 1px; bottom: 2px; left: 50%; background-color: #a8874a; transition: all 0.4s ease; transform: translateX(-50%); }
+        .nav > li > a:hover { color: #a8874a; }
+        .nav > li > a:hover::after { width: 100%; }
+
+
+
+        /* --- 子頁面專屬的迷你橫幅 (Inner Hero) --- */
+        .page-banner {
+            background-color: #2c1e16; /* 深胡桃木色橫幅 */
+            padding: 80px 20px;
+            text-align: center;
+            color: #fdfcf9;
+            border-bottom: 1px solid #a8874a;
+        }
+        .page-banner h1 {
+            font-size: 42px; letter-spacing: 4px; margin-bottom: 10px;
+        }
+        .page-banner p {
+            color: #d4c3a3; font-size: 16px; letter-spacing: 2px; font-style: italic;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- 養護指南內容區塊 --- */
+        .guide-section {
+            max-width: 1100px;
+            margin: 60px auto 100px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        /* 白底金框的說明卡片 */
+        .guide-card {
+            background-color: #fff;
+            border: 1px solid #e6decb;
+            padding: 45px 40px;
+            box-shadow: 0 5px 15px rgba(44, 30, 22, 0.03);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .guide-card:hover {
+            border-color: #a8874a;
+            box-shadow: 0 15px 30px rgba(44, 30, 22, 0.08);
+            transform: translateY(-5px);
+        }
+
+        /* 卡片上方的金色小裝飾 */
+        .guide-card::before {
+            content: ''; position: absolute; top: 0; left: 50%;
+            transform: translateX(-50%); width: 60px; height: 3px;
+            background-color: #a8874a;
+        }
+
+        .guide-card h2 {
+            font-size: 26px; color: #2c1e16; margin-bottom: 5px;
+            text-align: center; letter-spacing: 2px;
+        }
+
+        .card-subtitle {
+            text-align: center; font-size: 14px; color: #a8874a;
+            margin-bottom: 30px; letter-spacing: 1px;
+            padding-bottom: 20px; border-bottom: 1px dashed #e6decb;
+        }
+
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-list li {
+            font-size: 16px; color: #5a4a3f; margin-bottom: 25px;
+            line-height: 1.8; position: relative;
+            padding-left: 28px;
+        }
+
+        .guide-list li::before {
+            content: '◆'; position: absolute; left: 0; top: 2px;
+            color: #d4c3a3; font-size: 14px;
+        }
+
+        .highlight-text {
+            color: #b03a2e; /* 柔和的古典紅，用來標示警告與嚴禁事項 */
+            font-weight: 600;
+            border-bottom: 1px solid #b03a2e;
+        }
+
+        /* 回到首頁按鈕 */
+        .btn-back {
+            display: block; width: 200px; margin: 0 auto;
+            text-align: center; background-color: #2c1e16; color: #f9f8f4;
+            padding: 12px 0; text-decoration: none; border: 1px solid #2c1e16;
+            font-family: 'Noto Serif TC', serif; letter-spacing: 2px;
+            transition: all 0.4s ease;
+        }
+        .btn-back:hover { background-color: #fdfcf9; color: #2c1e16; border-color: #a8874a; }
+
+        @media (max-width: 800px) {
+            .guide-section { grid-template-columns: 1fr; }
+            .header { flex-direction: column; gap: 15px; }
+            .nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">GUOBAO 國堡門</a>
+        <ul class="nav">
+            <li><a href="index.html#about">關於國堡</a></li>
+            <li><a href="index.html#products">玄關門系列</a></li>
+            <li><a href="index.html#flowers">門花系列</a></li>
+            <li><a href="index.html#locks">門鎖系列</a></li>
+            <li><a href="#" style="color: #a8874a; border-bottom: 1px solid #a8874a;">門樘養護</a></li>
+            <li><a href="index.html#gallery">實例欣賞</a></li>
+            <li><a href="index.html#stores">門市資訊</a></li>
+        </ul>
+    </header>
+
+    <section class="page-banner">
+        <h1>門樘養護</h1>
+        <p>Professional Care & Maintenance</p>
+    </section>
+
+    <main class="guide-section">
+        <article class="guide-card">
+            <h2>金屬與科技材質</h2>
+            <div class="card-subtitle">適用：鋼製門 / 防爆門 / 銅雕門 / 碳纖維門</div>
+            <ul class="guide-list">
+                <li><strong>日常清潔：</strong>以無棉絮乾布撢除塵土，將中性水蠟（如碧麗珠）噴於乾布上均勻擦拭以維持亮度。<span class="highlight-text">嚴禁使用濕布或化學酸鹼劑</span>（如甲苯、鹽酸）。</li>
+                <li><strong>五金與玻璃：</strong>鎖具鉸鏈請每半年定期檢查順暢度並上潤滑油；玻璃清潔請將清潔劑少量噴於抹布後擦拭，勿直接噴灑以防起霧。</li>
+                <li><strong>溝槽保養：</strong>門檻與溝槽處請先以毛刷撢除砂塵，再行擦拭。（擦拭過溝槽的抹布請勿再用於門面）</li>
+                <li><strong>施工沾黏處理：</strong>若遇水性油漆或水泥沾黏，請以濕潤衛生紙敷貼，待其軟化後再以軟毛牙刷輕柔刷除即可。</li>
+            </ul>
+        </article>
+
+        <article class="guide-card">
+            <h2>實木門系列</h2>
+            <div class="card-subtitle">適用：天然實木門 / 科技實木門</div>
+            <ul class="guide-list">
+                <li><strong>溫和清潔：</strong>請先以乾淨軟布輕柔去除灰塵，再使用專用保養蠟（如碧麗珠）均勻擦拭表面，可永保如新。</li>
+                <li><strong>防潮警語：</strong>為保護天然木質結構，<span class="highlight-text">絕對禁止使用濕抹布或清水直接清洗</span>，以防受潮變形。</li>
+                <li><strong>嚴禁強酸鹼：</strong>請務必特別叮囑清潔人員，不可使用無煙鹽酸或任何具侵蝕性之清潔劑清理門面。</li>
+                <li><strong>天然紋理說明：</strong>實木屬天然材質，隨台灣氣候變化與個人保養方式產生之自然木紋微裂現象，屬木材呼吸之正常展現，不在保固範圍內。</li>
+            </ul>
+        </article>
+    </main>
+
+    <a href="index.html" class="btn-back">返回首頁</a>
+
+</body>
+</html>

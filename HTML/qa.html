@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>常見問題 Q&A | 國堡門 Guobao Door</title>
+    <style>
+        /* 引入古典字體 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;600&family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f9f8f4; 
+            color: #3e332a;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .logo, .nav a, .section-tag {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* --- 頂部導覽列 --- */
+        .header {
+            position: sticky; top: 0; z-index: 1000; 
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: #fdfcf9; padding: 15px 5%;
+            border-bottom: 4px double #d4c3a3;
+        }
+        .logo { font-size: 28px; font-weight: 700; color: #2c1e16; letter-spacing: 2px; text-decoration: none;}
+        .nav { list-style-type: none; display: flex; align-items: center; gap: 20px; }
+        .nav > li > a { text-decoration: none; color: #4a3b32; font-weight: 600; font-size: 16px; letter-spacing: 1px; padding: 10px 0; position: relative; transition: color 0.3s ease; }
+        .nav > li > a::after { content: ''; position: absolute; width: 0; height: 1px; bottom: 2px; left: 50%; background-color: #a8874a; transition: all 0.4s ease; transform: translateX(-50%); }
+        .nav > li > a:hover { color: #a8874a; }
+        .nav > li > a:hover::after { width: 100%; }
+
+
+        /* --- 頁面橫幅 --- */
+        .page-banner {
+            background-color: #2c1e16; 
+            padding: 80px 20px; text-align: center; color: #fdfcf9;
+            border-bottom: 1px solid #a8874a;
+        }
+        .page-banner h1 { font-size: 42px; letter-spacing: 4px; margin-bottom: 10px; }
+        .page-banner p { color: #d4c3a3; font-size: 16px; letter-spacing: 2px; font-style: italic; font-family: 'Playfair Display', serif; }
+
+        /* --- Q&A 內容區塊 --- */
+        .qa-section {
+            max-width: 900px; /* Q&A 區塊不需要太寬，這樣文字閱讀起來最舒適 */
+            margin: 60px auto 100px auto;
+            padding: 0 20px;
+        }
+
+        .qa-category-title {
+            font-size: 28px; color: #2c1e16; margin: 50px 0 20px 0;
+            display: flex; align-items: center; gap: 15px;
+        }
+        
+        .qa-category-title::after {
+            content: ''; flex-grow: 1; height: 1px; background-color: #e6decb;
+        }
+
+        /* 手風琴折疊設計 (利用原生 details 標籤) */
+        .faq-item {
+            background-color: #fff;
+            border: 1px solid #e6decb;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        /* 隱藏原生箭頭 */
+        .faq-item summary::-webkit-details-marker { display: none; }
+        
+        .faq-question {
+            list-style: none; /* 隱藏其他瀏覽器的原生箭頭 */
+            padding: 20px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c1e16;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        .faq-question:hover {
+            background-color: #fdfcf9;
+        }
+
+        /* 右側的 ＋ 號 icon */
+        .faq-question::after {
+            content: '+';
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 24px;
+            color: #a8874a;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        /* 當 details 展開時，＋ 號旋轉並變成 － 號的感覺 */
+        .faq-item[open] .faq-question::after {
+            transform: rotate(45deg);
+        }
+        
+        /* 展開時標題底部加上金線 */
+        .faq-item[open] .faq-question {
+            border-bottom: 1px dashed #d4c3a3;
+        }
+
+        /* 展開後的解答內容 */
+        .faq-answer {
+            padding: 20px 25px;
+            color: #5a4a3f;
+            font-size: 15px;
+            line-height: 2;
+            background-color: #fff;
+        }
+
+        /* 列表排版的微調 */
+        .faq-answer ol, .faq-answer ul {
+            padding-left: 20px; margin-top: 10px;
+        }
+        .faq-answer li { margin-bottom: 8px; }
+        
+        .highlight-text { color: #b03a2e; font-weight: 600; }
+
+        /* 回到首頁按鈕 */
+        .btn-back-wrapper { text-align: center; margin: 40px 0 80px 0; }
+        .btn-back {
+            display: inline-block; width: 200px; background-color: transparent; color: #2c1e16;
+            padding: 12px 0; text-decoration: none; border: 1px solid #2c1e16;
+            font-family: 'Noto Serif TC', serif; letter-spacing: 2px; transition: all 0.4s ease;
+        }
+        .btn-back:hover { background-color: #2c1e16; color: #fdfcf9; }
+
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 15px; }
+            .nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .faq-question { font-size: 16px; padding: 15px; }
+            .faq-answer { padding: 15px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">GUOBAO 國堡門</a>
+
+
+        <ul class="nav">
+            <li><a href="index.html#about">關於國堡</a></li>
+            <li><a href="index.html#products">玄關門系列</a></li>
+            <li><a href="maintenance.html">門樘養護</a></li>
+            <li><a href="gallery-sale.html">實例欣賞與展品</a></li>
+            <li><a href="#" style="color: #a8874a; border-bottom: 1px solid #a8874a;">常見問題</a></li>
+            <!-- <li><a href="index.html">門市資訊</a></li> -->
+        </ul>
+    </header>
+
+    <section class="page-banner">
+        <h1>常見問題</h1>
+        <p>Frequently Asked Questions</p>
+    </section>
+
+    <main class="qa-section">
+        
+        <h2 class="qa-category-title">產品與保固</h2>
+        
+        <details class="faq-item">
+            <summary class="faq-question">國堡門隔音好嗎？</summary>
+            <div class="faq-answer">
+                <p>國堡門對隔音有極高要求：</p>
+                <ol>
+                    <li>大門皆有紮實的隔音填充物。</li>
+                    <li>門框皆有崁入式高磅數氣密條。</li>
+                    <li>雙玄關更有內外框雙氣密之功效。</li>
+                </ol>
+                <p><em>* 註：單層門隔音皆為有限，若對隔音有極高需求的客戶，強烈建議挑選「雙玄關系列」產品。</em></p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-question">國堡門有終生的保固服務嗎？</summary>
+            <div class="faq-answer">
+                <p>有的，我們展現道地的服務精神：</p>
+                <ul>
+                    <li><strong>鉸鍊：</strong>終身保固及調整。</li>
+                    <li><strong>氣密條：</strong>終身免費更換。</li>
+                    <li><strong>補漆：</strong>小範圍免費補漆 (大面積需由門市另行評估)。</li>
+                </ul>
+                <p>提供 0800 免費服務專線，技師全年待命為您服務。</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-question">防火與非防火門的差異為何？</summary>
+            <div class="faq-answer">
+                <ul>
+                    <li><strong>政府認證：</strong>防火門為政府合法規格 (甲種防火門 F60A 等級)，高溫下耐燃可達1小時以上。可開立防火證書及標章。非防火門則無法開立。</li>
+                    <li><strong>填充物：</strong>防火門扇填充物為合法防火素材；非防火門扇則為隔音素材。</li>
+                    <li><strong>外觀與重量：</strong>兩者外觀完全相同，但防火門重量會明顯較重。</li>
+                </ul>
+            </div>
+        </details>
+
+        <h2 class="qa-category-title">購買與安裝</h2>
+
+        <details class="faq-item">
+            <summary class="faq-question">若沒裝修，可以更換大門嗎？</summary>
+            <div class="faq-answer">
+                <p>完全沒問題！我們提供兩種專業工法：</p>
+                <ul>
+                    <li><strong>作法一 (拆除作法)：</strong>將舊門框拆除，安裝新框後進行泥作填補。</li>
+                    <li><strong>作法二 (包框工法)：</strong>採用乾式施工，免動泥作，直接將新門框包覆於舊框之上，快速乾淨。</li>
+                </ul>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-question">大門製作交期大約需要多久？</summary>
+            <div class="faq-answer">
+                <ul>
+                    <li><strong>非防火門：</strong>約 12-15 個工作天。</li>
+                    <li><strong>防火門：</strong>約 15-20 個工作天。</li>
+                    <li><strong>部分特殊門款：</strong>約 20-25 個工作天。</li>
+                </ul>
+                <p><em>* 實際天數可能依現場狀況有所調整，將以門市接洽為主。</em></p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-question">安裝期間會有安全疑慮嗎 (工程鎖)？</summary>
+            <div class="faq-answer">
+                <p>請放心，任何機械鎖或電子鎖，在施工期間我們皆會提供<strong>「工程鎖」</strong>給客戶使用。此舉可確保施工中與完工後的居家安全。完工後，客戶無需額外花費換鎖費用，即會為您換上正式鎖心。</p>
+            </div>
+        </details>
+
+        <h2 class="qa-category-title">日常使用與保養</h2>
+
+        <details class="faq-item">
+            <summary class="faq-question">可以用酒精或清水清潔大門嗎？</summary>
+            <div class="faq-answer">
+                <p><span class="highlight-text">絕對不可！</span></p>
+                <ul>
+                    <li>不可用水直接清潔刷洗。</li>
+                    <li>不可使用甲苯、化學藥劑或酒精進行擦拭 (極易導致掉色或破壞漆面)。</li>
+                    <li><strong>正確保養：</strong>請使用不易掉毛的乾布，噴上「碧麗珠」搓揉後，輕柔進行門面的清潔保養。</li>
+                </ul>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-question">大門是否能加裝電子鎖？</summary>
+            <div class="faq-answer">
+                <p>可以的。您可以至門市挑選我們配合的品牌型號，或是自行購買電子鎖。若自行購買，我們可代為在門片上沖孔 (費用另計)，但無代為安裝設定之服務。</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary class="faq-question">門鎖或鉸鍊轉動不順暢該怎麼辦？</summary>
+            <div class="faq-answer">
+                <p>客戶可先自行使用潤滑油 (如：針車油、WD-40 或恐龍191) 滴入鉸鍊處進行潤滑保養。若點油後短期內仍無改善，歡迎隨時來電，由門市或客服專線團隊為您提供協助。</p>
+            </div>
+        </details>
+
+    </main>
+
+    <div class="btn-back-wrapper">
+        <a href="index.html" class="btn-back">返回首頁</a>
+    </div>
+
+</body>
+</html>
